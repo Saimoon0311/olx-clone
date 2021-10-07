@@ -4,6 +4,7 @@ import { View,Text,TouchableOpacity,TextInput,StyleSheet,ScrollView,SafeAreaView
 import Mobilepicker from "../elements/mobilepicker";
 import firestore from '@react-native-firebase/firestore';
 import LinearGradient from 'react-native-linear-gradient';
+import { showMessage } from "react-native-flash-message";
 
 export default function Bike ({navigation},prop){
           // const ty = 
@@ -45,39 +46,209 @@ export default function Bike ({navigation},prop){
                alert("Please enter title")
             }
             else if(postman_name===null){
-               alert("Please enter you name")
+               showMessage({
+                  type:"danger",
+                  icon:"danger",
+                  message:"Username or Password is incorrect"
+                })
             }
             else{
+               var dataa = new FormData()
+               dataa.append(
+                     "price",
+                     price
+               )
+               dataa.append(
+                  "subcat_id",
+                  subcat_id
+            )
+            dataa.append(
+               "cat_id",
+               cat_id
+         )
+      dataa.append(
+         "postman_name",
+         postman_name
+   )
+   dataa.append(
+      "make",
+      make
+)
+dataa.append(
+   "title",
+   title
+)
+dataa.append(
+   "phone_number",
+   phone_number
+)
+dataa.append(
+   "description",
+   description
+)
+dataa.append(
+   "state",
+   state
+)
+dataa.append(
+   "city",
+   city
+)
+dataa.append(
+   "main_img",
+   {
+      name:main_img[0].fileName,
+      uri :main_img[0].uri,
+      type: main_img[0].type,
+   },
+)
+dataa.append(
+   "type",
+   type
+)
+dataa.append(
+   "condition",
+   condition
+)
+if (img2===null) {
+   console.log("no datas")
+} else {
+   dataa.append(
+      "img2",
+      {
+         name:img2[0].fileName,
+         uri :img2[0].uri,
+         type:img2[0].type,
+      }
+   )  
+}
+if (img3===null) {
+   console.log("no datas")
+} else {
+   dataa.append(
+      "img3",
+      {
+         name:img3[0].fileName,
+         uri :img3[0].uri,
+         type:img3[0].type,
+      }
+   )  
+}
+if (img4===null) {
+   console.log("no datas")
+} else {
+   dataa.append(
+      "img4",
+      {
+         name:img4[0].fileName,
+         uri :img4[0].uri,
+         type:img4[0].type,
+      }
+   )  
+}
+if (img5===null) {
+   console.log("no datas")
+} else {
+   dataa.append(
+      "img5",
+      {
+         name:img5[0].fileName,
+         uri :img5[0].uri,
+         type:img5[0].type,
+      }
+   )  
+}
+if (img6===null) {
+   console.log("no datas")
+} else {
+   dataa.append(
+      "img6",
+      {
+         name:img6[0].fileName,
+         uri :img6[0].uri,
+         type:img6[0].type,
+      }
+   )  
+}
+if (img7===null) {
+   console.log("no datas")
+} else {
+   dataa.append(
+      "img7",
+      {
+         name:img7[0].fileName,
+         uri :img7[0].uri,
+         type:img7[0].type,
+      }
+   )  
+}
+if (img8===null) {
+   console.log("no datas")
+} else {
+   dataa.append(
+      "img8",
+      {
+         name:img8[0].fileName,
+         uri :img8[0].uri,
+         type:img8[0].type,
+      }
+   )  
+}
+if (img9===null) {
+   console.log("no datas")
+} else {
+   dataa.append(
+      "img9",
+      {
+         name:img9[0].fileName,
+         uri :img9[0].uri,
+         type:img9[0].type,
+      }
+   )  
+}
+if (img10===null) {
+   console.log("no datas")
+} else {
+   dataa.append(
+      "img10",
+      {
+         name:img10[0].fileName,
+         uri :img10[0].uri,
+         type:img10[0].type,
+      }
+   )  
+}
+if (img11===null) {
+   console.log("no datas")
+} else {
+   dataa.append(
+      "img11",
+      {
+         name:img11[0].fileName,
+         uri :img11[0].uri,
+         type:img11[0].type,
+      }
+   )  
+}
+if (img12===null) {
+   console.log("no datas")
+} else {
+   dataa.append(
+      "img12",
+      {
+         name:img12[0].fileName,
+         uri :img12[0].uri,
+         type:img12[0].type,
+      }
+   )  
+}
                fetch("https://olx.devoa.xyz/api/post", {
                   method: 'POST',
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
                      },
-                  body: JSON.stringify({
-                     price,
-                     subcat_id,
-                     cat_id,
-                     postman_name,
-                     title,
-                     phone_number,
-                     city,
-                     state,
-                     main_img,
-                     description,
-                     condition,
-                     img2,
-                     img3,
-                     img4,
-                     img5,
-                     img6,
-                     img7,
-                     img8,
-                     img9,
-                     img10,
-                     img11,
-                     img12,
-                  })
+                     body:dataa
                })
                
                .then((response) => response.json())

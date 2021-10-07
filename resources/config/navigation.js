@@ -39,6 +39,7 @@ import Propertyforsell from '../catagories/propertyforsell';
 import Businessalldata from "../screens/Alldata/businessalldata"
 import Propertyrralldata from "../screens/Alldata/propertyrralldata";
 import Fashin from "../catagories/fashin"
+import Myaccount from "../screens/Myaccount"
 // import Furnicheralldata from '../screens/Alldata/ferni';
 
 const Stack = createNativeStackNavigator();

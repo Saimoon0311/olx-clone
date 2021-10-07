@@ -63,7 +63,10 @@ import React, { Component } from 'react';
  Image, TouchableOpacity, Alert } from 'react-native';  
  import Navigation from './resources/config/navigation';
  import { NavigationContainer } from '@react-navigation/native';
+ import FlashMessage from "react-native-flash-message";
  import imageee from "./resources/Images/12569.gif"
+import { Provider } from 'react-redux';
+import store from './resources/redux/store';
  export default class App extends Component  
 {  
    constructor(){  
@@ -98,10 +101,13 @@ import React, { Component } from 'react';
                 </View>  
              </View> )  
          return(
-            (this.state.isVisible === true) ? Splash_Screen : 
-          <NavigationContainer>
-          <Navigation/>
-        </NavigationContainer>
+           <Provider store={store} >
+              {(this.state.isVisible === true) ? Splash_Screen : 
+           <NavigationContainer>
+           <Navigation/>
+         </NavigationContainer>}
+               <FlashMessage position="top" />
+               </Provider>
               );  
     }  
 }  

@@ -87,7 +87,7 @@ export default class Imagss extends Component {
         const source = { uri: response.uri };
 
         const responses = response.assets[0].uri
-        const im = response.assets[0]
+        const im = response.assets
         this.props.parentCallback(im)
         console.log("assexr=====>>>>>>=====", responses)
         this.setState({ visible: false });
@@ -133,7 +133,7 @@ export default class Imagss extends Component {
         const source = { uri: response.uri };
 
         const responses = response.assets[0].uri
-        const im = response.assets[0]
+        const im = response.assets
         this.props.parentCallback(im)
         console.log("assexr=====>>>>>>=====", responses)
         this.setState({ visible: false });
@@ -170,7 +170,7 @@ export default class Imagss extends Component {
         alert(response.customButton);
       } else {
         const responses = response.assets[0].uri
-        const im = response.assets[0]
+        const im = response.assets
         this.props.parentCallback(im)
         console.log("assexr=====>>>>>>=====", responses)
         this.setState({ visible: false });

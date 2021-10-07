@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react"
-import { View, Text, SafeAreaView, ScrollView, TextInput, StyleSheet, TouchableOpacity, Image, Button } from "react-native"
+import { View, Text, SafeAreaView, ScrollView, TextInput, StyleSheet, TouchableOpacity, Image, Button,Alert } from "react-native"
 import auth from '@react-native-firebase/auth';
 // import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {showMessage} from "react-native-flash-message";
 // import iam from "../Images/80qW.gif"
 
 export default function Login(props) {
@@ -13,91 +15,56 @@ export default function Login(props) {
   const Signup = () => {
     props.Nav()
   }
-
-
-
-
-
-  // For Email And password auth
-
-
-
-
-
-
-
-  // For google login error
-
-
-  // async function onGoogleButtonPress() {
-  //           // Get the users ID token
-  //           const { idToken } = await GoogleSignin.signIn();
-
-  //           // Create a Google credential with the token
-  //           const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-  //           // Sign-in the user with the credential
-  //           console.log("User login")         
-  //           return auth().signInWithCredential(googleCredential);
+  // useEffect(()=>{
+  // if(AsyncStorage.getItem("user-info")){
+  //   var user = AsyncStorage.getItem
   // }
-  // useEffect(() => {
-  //   GoogleSignin.configure({
-  //     scopes: ['email'], // what API you want to access on behalf of the user, default is email and profile
-  //     webClientId:
-  //     '537203081316-734316bfjp1v24rngh67j4ca29q3gd6i.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
-  //     offlineAccess: true,
-  //      // if you want to access Google API on behalf of the user FROM YOUR SERVER
-  //   });
-  // }, []); 
+  // },[])
+async function login(){
+  let item = {email,password}
+  let result = await fetch("https://olx.devoa.xyz/api/login",{
+    method:"POST",
+    headers:{
+      Accept :"application/json",
+      "Content-Type" :"application/json",
+    },
+    body:JSON.stringify(item)
+  })
+  .then((response) => response.json())
+      .then( async (json)  => {
+        // console.log("==>",json[0])
+        if (json[0] == "success") { 
+            console.log("==>",json[1])
+             const data= await AsyncStorage.setItem("Data",JSON.stringify([1]))
+             
+            // console.log(data)
+        } else {
+          showMessage({
+            type:"danger",
+            icon:"danger",
+            message:"Username or Password is incorrect"
+          })
+          // Alert.alert('Login Failed', 'Username or Password is incorrect');
+          console.log(json)
+        }
+      })
+      .catch((err) => {
+        showMessage({
+          type:"danger",
+          icon:"danger",
+          message:"Username or Password is incorrect"
+        })
+        console.log(err);
+      });
 
+
+  // result=await result.json();
+  // AsyncStorage.setItem(JSON.stringify(result))
+  // var user = AsyncStorage.getItem()
+  // console.log("ysret=====>>>>>>>>"+ user)
+
+}
   return (
-    // <ScrollView>
-    // {/* <View style={styles. SplashScreen_ChildView}>
-    //   <View>
-    //     <Ionicons name="person-circle" size={150} />
-    //   </View>
-    //   <Text></Text>
-    //   <View>
-
-    //   <TextInput placeholderTextColor="black" onChangeText={(text)=>setNamee(text)} style={styles.in} placeholder="Enter Your Name" />
-    //     <Text></Text>
-    //     <TextInput placeholderTextColor="black" onChangeText={(text)=>setEmail(text)} style={styles.in}  placeholder="Enter Your Email" />
-    //     <Text></Text>
-    //     <TextInput placeholderTextColor="black"  secureTextEntry={true} onChangeText={(text)=>setPassword(text)} style={styles.in} placeholder="Enter Your Password" />
-    //     <Text></Text>
-    //     <View style={{justifyContent:"center",alignItems:"center"}}>
-
-    //     <Text>Forget Password ?</Text>
-    //     </View>
-    //     <Text></Text>
-    //   </View>
-    //   <Text></Text>
-    //   <View>
-    //   <TouchableOpacity style={styles.bhtl} onPress={onEmailsign} >
-    //                     <Text style={styles.bhtsl}>
-    //                      Login
-    //                     </Text>
-    //                    <Ionicons name="log-in-outline" size={25} color={"#0d7a02"} />
-    //                   </TouchableOpacity>                
-    //   </View>
-    //   <Text></Text>
-    //   <View>
-    //   <TouchableOpacity onPress={onFacebookButtonPress} style={styles.bht} >
-    //                     <Text style={styles.bhts}>
-    //                      Login With Facebook
-    //                     </Text>
-    //                    <Ionicons name="log-in-outline" size={35} color={"#0e0ee3"} />
-    //                   </TouchableOpacity>
-    //   </View>
-    // </View> */}
-
-
-
-
-
-
-
-
     <ScrollView contentContainerStyle={{ paddingBottom: 40 }} >
       <SafeAreaView>
         <View style={{ backgroundColor: "#0c0e87" }}>
@@ -109,10 +76,10 @@ export default function Login(props) {
           </View>
           <View>
             <View style={{ backgroundColor: "#f5f5f5", height: "100%", alignItems: "center", paddingTop: 50, borderTopStartRadius: 30, borderTopEndRadius: 30 }} >
-              <View style={styles.inp} >
+              {/* <View style={styles.inp} >
                 <Ionicons name="people-outline" size={35} color={"gray"} style={{ paddingTop: 5 }} />
                 <TextInput placeholderTextColor="gray" onChangeText={(text) => setNamee(text)} style={styles.in} placeholder="Enter Your Name" />
-              </View>
+              </View> */}
               <Text></Text>
               <View style={styles.inp} >
                 <Ionicons name="at-outline" size={35} color={"gray"} style={{ paddingTop: 5 }} />
@@ -135,7 +102,7 @@ export default function Login(props) {
               </View>
 
               <View>
-                <TouchableOpacity style={styles.bhtl} >
+                <TouchableOpacity style={styles.bhtl} onPress={login} >
                   <Text style={styles.bhtsl}>
                     Login
                   </Text>

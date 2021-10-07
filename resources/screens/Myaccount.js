@@ -3,6 +3,7 @@ import auth from '@react-native-firebase/auth';
 import TypeWriter from 'react-native-typewriter'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Login from "../screens/Login"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View,Text,Image,StyleSheet,TouchableOpacity } from "react-native"
 import Card from "../elements/card"
 import { Avatar } from 'react-native-elements';
@@ -13,84 +14,60 @@ function Myaccount({navigation},props){
 const Nav =()=>{
   navigation.navigate("Signup")
 }
-  let delayMap = [
-    // increase delay by 100ms at index 4
-    { at: 4, delay: 100 },
-    // increase delay by 400ms following every '.' character
-    { at: '.', delay: 400 },
-    // decrease delay by 200ms following every '!' character
-    { at: /!/, delay: -200 }
-  ]
   const Logout=()=>{
     auth()
           .signOut()
           .then(() => console.log('User signed out!'))
   }
 
-  // Set an initializing state whilst Firebase connects
-const [initializing, setInitializing] = useState(true);
+const getdatas = async ()=>{
+      try {
+        var item = await AsyncStorage.getItem("Data")
+        setUser(item)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  
+
+//   // Set an initializing state whilst Firebase connects
+// const [initializing, setInitializing] = useState(true);
 const [user, setUser] = useState();
 
-// Handle user state changes
-function onAuthStateChanged(user) {
-  setUser(user);
-  if (initializing) setInitializing(false);
-}
+// // Handle user state changes
+// function onAuthStateChanged(user) {
+//   setUser(user);
+//   if (initializing) setInitializing(false);
+// }
 useEffect(() => {
-  const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-  return subscriber; // unsubscribe on unmount
+getdatas()
 }, []);
 
-if (initializing) return null;
 
-if (!user) {
-  return (
-    <View>
-      <Login Nav={Nav} />
-    </View>
-  );
-}        
+// if (user==null) {
+//   return (
+//     <View>
+//       <Login Nav={Nav} />
+//     </View>
+//   );
+// }        
 
-          return(
-<View style={styles.profile} >
-   
-{/* <Text>Wellcome</Text> */}
-
-
-{/* <Imagss/> */}
-<View>
- <Avatar
-      rounded
-        source={{uri:user.photoURL}}
-        size={150}
-        onPress={()=>{
-          // this.setState({ visible: true });
-        }}
-
-      />
+return(
+  <View>
+  {user==null?<Login/>:
+      <View style={styles.profile} >
+         
+      {/* <Text>Wellcome</Text> */}
+      
+      
+      {/* <Imagss/> */}
+      <Text>hy</Text>
+      </View>
+  }
 </View>
+)
 
-  <View style={styles.te}>
-    <Text style={{fontSize:30,color:"green"}}>{user.displayName}</Text>
-  </View>
-  <Text></Text>
-  <Text></Text>
-  <Text></Text>
-  <Text></Text>
-  <Text></Text>
-  {/* <TypeWriter typing={-1}>Hello World!</TypeWriter> */}
-<View>
-<TouchableOpacity style={styles.btn} onPress={Logout} >
-  <Text style={styles.bhts}>
-    Log out
-  </Text>
-  <Ionicons name={"log-out-outline"} size={30} color={"#610303"} />
-</TouchableOpacity>
-</View>
 
-</View>
-// </View>
-          );
 }
 export default Myaccount;
 

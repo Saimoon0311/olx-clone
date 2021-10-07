@@ -158,7 +158,7 @@ const Furnicture=()=>{
        <NativeBaseProvider>
            <Text style={{fontSize:30,paddingTop:10,fontWeight:"bold",textAlign:"center"}}>Newest Release Ads</Text>
          {/* <ScrollView style={{flexDirection:"row"}} > */}
-         <View style={{flexDirection:"row"}} >
+         <View style={{alignItems:"center"}}>
 
        <Mobiledata Ite={Ite} />
          </View>

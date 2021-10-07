@@ -115,89 +115,141 @@ dataa.append(
    "condition",
    condition
 )
-dataa.append(
-   "img2",
-   img2
-)
-dataa.append(
-   "img3",
-   img3
-)
-dataa.append(
-   "img4",
-   img4
-)
-dataa.append(
-   "img5",
-   img5
-)
-dataa.append(
-   "img6",
-   img6
-)
-dataa.append(
-   "img7",
-   img7
-)
-dataa.append(
-   "img8",
-   img8
-)
-dataa.append(
-   "img9",
-   img9
-)
-dataa.append(
-   "img10",
-   img10
-)
-dataa.append(
-   "img11",
-   img11
-)
-dataa.append(
-   "img12",
-   img12
-)
+if (img2===null) {
+   console.log("no datas")
+} else {
+   dataa.append(
+      "img2",
+      {
+         name:img2[0].fileName,
+         uri :img2[0].uri,
+         type:img2[0].type,
+      }
+   )  
+}
+if (img3===null) {
+   console.log("no datas")
+} else {
+   dataa.append(
+      "img3",
+      {
+         name:img3[0].fileName,
+         uri :img3[0].uri,
+         type:img3[0].type,
+      }
+   )  
+}
+if (img4===null) {
+   console.log("no datas")
+} else {
+   dataa.append(
+      "img4",
+      {
+         name:img4[0].fileName,
+         uri :img4[0].uri,
+         type:img4[0].type,
+      }
+   )  
+}
+if (img5===null) {
+   console.log("no datas")
+} else {
+   dataa.append(
+      "img5",
+      {
+         name:img5[0].fileName,
+         uri :img5[0].uri,
+         type:img5[0].type,
+      }
+   )  
+}
+if (img6===null) {
+   console.log("no datas")
+} else {
+   dataa.append(
+      "img6",
+      {
+         name:img6[0].fileName,
+         uri :img6[0].uri,
+         type:img6[0].type,
+      }
+   )  
+}
+if (img7===null) {
+   console.log("no datas")
+} else {
+   dataa.append(
+      "img7",
+      {
+         name:img7[0].fileName,
+         uri :img7[0].uri,
+         type:img7[0].type,
+      }
+   )  
+}
+if (img8===null) {
+   console.log("no datas")
+} else {
+   dataa.append(
+      "img8",
+      {
+         name:img8[0].fileName,
+         uri :img8[0].uri,
+         type:img8[0].type,
+      }
+   )  
+}
+if (img9===null) {
+   console.log("no datas")
+} else {
+   dataa.append(
+      "img9",
+      {
+         name:img9[0].fileName,
+         uri :img9[0].uri,
+         type:img9[0].type,
+      }
+   )  
+}
+if (img9===null) {
+   console.log("no datas")
+} else {
+   dataa.append(
+      "img9",
+      {
+         name:img9[0].fileName,
+         uri :img9[0].uri,
+         type:img9[0].type,
+      }
+   )  
+}
+if (img11===null) {
+   console.log("no datas")
+} else {
+   dataa.append(
+      "img11",
+      {
+         name:img11[0].fileName,
+         uri :img11[0].uri,
+         type:img11[0].type,
+      }
+   )  
+}
+if (img12===null) {
+   console.log("no datas")
+} else {
+   dataa.append(
+      "img12",
+      {
+         name:img12[0].fileName,
+         uri :img12[0].uri,
+         type:img12[0].type,
+      }
+   )  
+}
                fetch("https://olx.devoa.xyz/api/post", {
                   method: 'POST',
-                  // headers: {
-                  //     'Accept': 'application/json',
-                  //     'Content-Type': 'application/json'
-                  //    },
                  body:dataa
-
-                  // body: JSON.stringify({
-                  //    price,
-                  //    subcat_id,
-                  //    cat_id,
-                  //    user_id,
-                  //    postman_name,
-                  //    make,
-                  //    title,
-                  //    phone_number,
-                  //    type,
-                  //    city,
-                  //    state,
-                  //    main_img:{
-                  //       name:main_img[0].fileName,
-                  //       uri :main_img [0].uri,
-                  //       type: main_img[0].type,
-                  //    },
-                  //    condition,
-                  //    description,
-                  //    img2,
-                  //    img3,
-                  //    img4,
-                  //    img5,
-                  //    img6,
-                  //    img7,
-                  //    img8,
-                  //    img9,
-                  //    img10,
-                  //    img11,
-                  //    img12,
-                  // })
                })
                
                .then((response) => response.json())

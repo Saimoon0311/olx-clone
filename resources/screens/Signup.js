@@ -62,21 +62,43 @@ export default function Signup({ navigation }) {
       alert("Please Enter TheCorrect Password")
     }
     else {
+      var dataa = new FormData()
+      dataa.append(
+        "email",
+        email
+  )
+  dataa.append(
+    "password",
+    password
+)
+dataa.append(
+  "username",
+  username
+)
+dataa.append(
+  "user_img",
+  {
+    name:user_img[0].fileName,
+    uri :user_img[0].uri,
+    type:user_img[0].type,
+ },
+)
+dataa.append(
+  "contact",
+  contact
+)
+dataa.append(
+  "address",
+  address
+)
+dataa.append(
+  "gender",
+  gender
+)
+
       fetch("https://olx.devoa.xyz/api/register", {
         method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email,
-          password,
-          username,
-          user_img,
-          contact,
-          address,
-          gender
-        })
+        body: dataa
       })
 
         .then((response) => response.json())
