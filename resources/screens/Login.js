@@ -1,25 +1,42 @@
 import React, { useEffect, useState } from "react"
-import { View, Text, SafeAreaView, ScrollView, TextInput, StyleSheet, TouchableOpacity, Image, Button,Alert } from "react-native"
+import { View, Text, SafeAreaView, ScrollView, TextInput, StyleSheet, TouchableOpacity, Image, Button,Alert,RefreshControl } from "react-native"
 import auth from '@react-native-firebase/auth';
-// import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { GoogleSignin ,statusCodes} from 'react-native-google-signin';
 import {showMessage} from "react-native-flash-message";
 // import iam from "../Images/80qW.gif"
 
 export default function Login(props) {
+
+
+
+  const [refreshing, setRefreshing] = useState(false);
   const [email, setEmail] = useState(null)
   const [password, setPassword] = useState(null)
   const [namee, setNamee] = useState(null)
+  const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false))
+    console.log("refresh")
+  }, []);
   const Signup = () => {
     props.Nav()
   }
-  // useEffect(()=>{
+  const lo =()=>{
+    props.Navs()
+    console.log("hhhh")
+  }
+  useEffect(()=>{
   // if(AsyncStorage.getItem("user-info")){
   //   var user = AsyncStorage.getItem
   // }
-  // },[])
+  GoogleSignin.configure()
+  },[])
 async function login(){
   let item = {email,password}
   let result = await fetch("https://olx.devoa.xyz/api/login",{
@@ -35,26 +52,59 @@ async function login(){
         // console.log("==>",json[0])
         if (json[0] == "success") { 
             console.log("==>",json[1])
-             const data= await AsyncStorage.setItem("Data",JSON.stringify([1]))
-             
-            // console.log(data)
-        } else {
-          showMessage({
-            type:"danger",
-            icon:"danger",
-            message:"Username or Password is incorrect"
-          })
-          // Alert.alert('Login Failed', 'Username or Password is incorrect');
-          console.log(json)
-        }
-      })
-      .catch((err) => {
-        showMessage({
-          type:"danger",
-          icon:"danger",
-          message:"Username or Password is incorrect"
-        })
-        console.log(err);
+            const data= json[1]
+             await AsyncStorage.setItem("Data",JSON.stringify(data))
+            //  onRefresh()
+             const g = await AsyncStorage.getItem("Data")
+            //  refresh reset
+        // props.Navs()
+        lo()
+  //           auth() 
+  // .createUserWithEmailAndPassword(email, password)
+  // .then( async() => {
+  //   console.log('User account created & signed in!',data);
+  //   console.log('User account created & signed in!===================',g);
+  // } 
+  // )
+  // .catch( async (error)  => {
+  //   if (error.code == 'auth/email-already-in-use') {
+//       const data= json[1]
+//       await AsyncStorage.setItem("Data",JSON.stringify(data))
+//       // onRefresh()
+//       auth()
+// .createUserWithEmailAndPassword(email, password)
+// // .then( async() => {
+// const g = await AsyncStorage.getItem("Data")
+// // console.log('User account created & signed in!',data);
+// // console.log('User account created & signed in!===================',g);
+// // })
+// console.log("jjj",error)
+    }
+
+  //   if (error.code === 'auth/invalid-email') {
+  //     console.log('That email address is invalid!');
+  //   }
+
+  //   console.error(error);
+  // });
+  //           // console.log(data)
+  //       } else {
+  //         showMessage({
+  //           type:"danger",
+  //           icon:"danger",
+  //           message:"Username or Password is incorrect"
+  //         })
+  //         // Alert.alert('Login Failed', 'Username or Password is incorrect');
+  //         console.log(json)
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       showMessage({
+  //         type:"danger",
+  //         icon:"danger",
+  //         message:"Username or Password is incorrect"
+  //       })
+  //       console.log(err);
       });
 
 
@@ -64,8 +114,57 @@ async function login(){
   // console.log("ysret=====>>>>>>>>"+ user)
 
 }
+
+const hy = async ()=>{
+  
+  // // Create a Google credential with the token
+  // // Sign-in the user with the credential
+  // console.log("data has google signi in")
+  
+  
+  
+  try {
+    GoogleSignin.configure({
+      // webClientId: '226354085812-12cdiu8i1hta98sqd8kr403sr2gqbo3g.apps.googleusercontent.com',
+      // offlineAccess: true,
+      androidClientId:  '226354085812-12cdiu8i1hta98sqd8kr403sr2gqbo3g.apps.googleusercontent.com'
+    })
+    // const { idToken } = await GoogleSignin.signIn();
+    // // console.log(googleCredential)
+    // return auth().signInWithCrede */ntial(googleCredential);
+    
+    await GoogleSignin.hasPlayServices();
+    const userInfo = await GoogleSignin.signIn();
+    const data ={
+       email: userInfo.user.email,
+       name : userInfo.user.name,
+       yul : userInfo.user.photo,
+    }
+      await AsyncStorage.setItem("Data",JSON.stringify(data))
+     const it = await AsyncStorage.getItem("Data")
+     var its = JSON.parse(it)
+      console.log("async syorage",its)
+    console.log(data,userInfo)
+  } catch (error) {
+    if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+      console.log("cancle",error)
+      // user cancelled the login flow
+    } else if (error.code === statusCodes.IN_PROGRESS) {
+      console.log("process",error)
+      // operation (e.g. sign in) is in progress already
+    } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+      console.log("PLAY_SERVICES_NOT_AVAILABLE",error)
+      // play services not available or outdated
+    } else {
+      console.log(error)
+    }
+  }
+
+
+  
+}
   return (
-    <ScrollView contentContainerStyle={{ paddingBottom: 40 }} >
+    <ScrollView contentContainerStyle={{ paddingBottom: 40 }}   >
       <SafeAreaView>
         <View style={{ backgroundColor: "#0c0e87" }}>
           <View style={{ position: "relative" }}>
@@ -102,20 +201,31 @@ async function login(){
               </View>
 
               <View>
-                <TouchableOpacity style={styles.bhtl} onPress={login} >
+                {/* <RefreshControl onRefresh={onRefresh}  refreshing={refreshing} > */}
+                <TouchableOpacity style={styles.bhtl} onPress={login}  >
                   <Text style={styles.bhtsl}>
                     Login
                   </Text>
                   <Ionicons name="log-in-outline" size={25} color={"#0d7a02"} />
                 </TouchableOpacity>
+                {/* </RefreshControl> */}
               </View>
               <Text></Text>
               <View>
-                <TouchableOpacity style={styles.bht} >
+                <TouchableOpacity style={styles.bht} onPress={hy} >
                   <Text style={styles.bhts}>
                     Login With Facebook
                   </Text>
                   <Ionicons name="log-in-outline" size={35} color={"#0e0ee3"} />
+                </TouchableOpacity>
+              </View>
+              <Text></Text>
+              <View>
+                <TouchableOpacity style={[styles.bht,{backgroundColor:"#d6b4cf"}]} onPress={hy} >
+                  <Text style={[styles.bhts,{color:"#59154b"}]}>
+                    Login With Google
+                  </Text>
+                  <Ionicons name="log-in-outline" size={35} color={"#59154b"} />
                 </TouchableOpacity>
               </View>
             </View>

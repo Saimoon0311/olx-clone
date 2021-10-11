@@ -6,5 +6,5 @@ export function login (data){
 }
 
 // export function login (data){
-// return apiPost(LOGIN,data)
+// return apiPost(SIGNUP,data)
 // }

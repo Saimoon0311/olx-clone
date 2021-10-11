@@ -1,4 +1,4 @@
-import { types } from "../type";
+import types  from "../type";
 import { combineReducers } from "redux";
 import auth from "./auth"
 

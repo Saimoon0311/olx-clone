@@ -1,4 +1,4 @@
-package com.olxclone;
+package com.olxclones;
 
 import com.facebook.react.ReactActivity;
 
