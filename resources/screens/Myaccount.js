@@ -19,9 +19,9 @@ const Navs = ()=>{
 }
   const Logout= async ()=>{
     // await AsyncStorage.removeItem("Data")
-    setUser(null)
+    setUser(nulls)
     // try {
-    //   await AsyncStorage.removeItem("Data").then(()=>{
+       const nulls = await AsyncStorage.removeItem("Data")
     //     auth().signOut()
     //           .then(() => console.log('User signed out!'))
     //           // setInitializing(true)
@@ -43,8 +43,9 @@ const getdatas = async ()=>{
         var item = await  AsyncStorage.getItem("Data")
        var ite = JSON.parse(item)
         setUser(ite)
+        console.log(ite)
       } catch (error) {
-        console.log(error)
+        console.log("error")
       }
     }
   

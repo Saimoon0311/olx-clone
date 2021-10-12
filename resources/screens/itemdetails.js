@@ -398,7 +398,7 @@ export default function Itemdetails({ route, navigation }) {
       </View>
       {item.IsPhone === null ? <View style={{ position: "absolute", bottom: 5, alignSelf: "center" }} >
         <View style={{ flexDirection: "row", bottom: 0, alignSelf: "center" }} >
-          <TouchableOpacity style={{ backgroundColor: "#0606d6", width: 200, height: 50, alignItems: "center", justifyContent: "center", borderRadius: 20, marginRight: 10 }} >
+          <TouchableOpacity style={{ backgroundColor: "#0606d6", width: 200, height: 50, alignItems: "center", justifyContent: "center", borderRadius: 20, marginRight: 10 }}  onPress={() => navigation.navigate("Chatpage", item)} >
             <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
               <Ionicons name="chatbubbles-outline" color="white" size={30} />
               <Text style={{ color: "white", fontSize: 23, paddingLeft: 20, fontWeight: "bold" }} >Chat</Text>
@@ -410,7 +410,7 @@ export default function Itemdetails({ route, navigation }) {
 
         <View style={{ position: "absolute", bottom: 5, alignSelf: "center" }} >
           <View style={{ flexDirection: "row", bottom: 0, alignSelf: "center" }} >
-            <TouchableOpacity style={{ backgroundColor: "#0606d6", width: 95, height: 50, alignItems: "center", justifyContent: "center", borderRadius: 20, marginRight: 10 }} >
+            <TouchableOpacity style={{ backgroundColor: "#0606d6", width: 95, height: 50, alignItems: "center", justifyContent: "center", borderRadius: 20, marginRight: 10 }}  onPress={() => navigation.navigate("Chatpage", item)}>
               <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                 <Ionicons name="chatbubbles-outline" color="white" size={30} />
                 <Text style={{ color: "white", fontSize: 23, paddingLeft: 2 }} >Chat</Text>

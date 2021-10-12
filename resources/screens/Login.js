@@ -58,7 +58,7 @@ async function login(){
              const g = await AsyncStorage.getItem("Data")
             //  refresh reset
         // props.Navs()
-        lo()
+        // lo()
   //           auth() 
   // .createUserWithEmailAndPassword(email, password)
   // .then( async() => {
